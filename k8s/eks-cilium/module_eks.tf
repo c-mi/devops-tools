@@ -15,12 +15,6 @@ module "eks" {
     coredns = {
       resolve_conflicts = "OVERWRITE"
     }
-    kube-proxy = {}
-    vpc-cni = {
-      addon_version            = "v1.11.2-eksbuild.1"
-      resolve_conflicts        = "OVERWRITE"
-      service_account_role_arn = module.vpc_cni_irsa_role.iam_role_arn
-    }
   }
 
   cluster_encryption_config = [{
@@ -40,7 +34,6 @@ module "eks" {
     iam_role_additional_policies = ["arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"]
     create_launch_template       = false
     launch_template_name         = ""
-    #iam_role_attach_cni_policy   = false
   }
 
   eks_managed_node_groups = {
