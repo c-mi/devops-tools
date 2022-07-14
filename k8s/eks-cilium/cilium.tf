@@ -27,16 +27,9 @@ resource "helm_release" "cilium" {
 
   values = [
     <<-VALUES
-    serviceAccounts:
-      operator:
-        annotations:
-          eks.amazonaws.com/role-arn: "${module.vpc_cni_irsa_role.iam_role_arn}"
-    operator:
-      extraEnv:
-        AWS_REGION: "${var.region}"
-        AWS_DEFAULT_REGION: "${var.region}"
     eni:
       enabled: true
+      iamRole: "${module.vpc_cni_irsa_role.iam_role_arn}"
     hubble:
       enabled: true
       listenAddress: :4244
