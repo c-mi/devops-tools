@@ -9,6 +9,7 @@ resource "null_resource" "aws-node" {
     when        = create
     interpreter = ["/bin/bash", "-c"]
     command     = <<-EOF
+      set -e
       aws eks update-kubeconfig --name ${local.name} --region ${var.region} --kubeconfig ./config
       KUBECONFIG='./config' kubectl delete ds -n kube-system aws-node kube-proxy
       rm ./config
